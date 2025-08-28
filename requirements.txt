@@ -1,7 +1,7 @@
 streamlit==1.29.0
 sqlalchemy==2.0.23
 streamlit-cropper==0.2.1
-pillow
+Pillow
 python-dotenv==1.0.0
 openai==1.55.3
 streamlit-drawable-canvas==0.9.3
