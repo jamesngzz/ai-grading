@@ -438,9 +438,17 @@ class DatabaseManagerV2:
                    .all())
     
     def get_submission_item_by_id(self, item_id: int) -> Optional[SubmissionItemV2]:
-        """Get submission item by ID"""
+        """Get submission item by ID with related question eagerly loaded to avoid detached lazy loads"""
         with self.get_session() as session:
-            return session.query(SubmissionItemV2).filter(SubmissionItemV2.id == item_id).first()
+            return (
+                session.query(SubmissionItemV2)
+                .options(
+                    joinedload(SubmissionItemV2.question),
+                    joinedload(SubmissionItemV2.grading)
+                )
+                .filter(SubmissionItemV2.id == item_id)
+                .first()
+            )
     
     # ============ GRADING OPERATIONS ============
     
